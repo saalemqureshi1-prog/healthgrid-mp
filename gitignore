@@ -1,0 +1,21 @@
+# Secrets: inhe kabhi GitHub par mat daalein
+.env
+.env.*
+*.pem
+supabase/.env
+supabase/functions/.env
+
+# Supabase CLI ki local files
+supabase/.temp/
+supabase/.branches/
+
+# Node / tools
+node_modules/
+npm-debug.log*
+
+# Editor aur OS ki files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

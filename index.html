@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HealthGrid MP</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="brand"><b>HealthGrid MP</b><span data-i18n="brandSub"></span></div>
+  <div class="controls">
+    <span id="who" class="who"></span>
+    <div class="lang" title="Language / भाषा"><button data-lang="hi">हिंदी</button><button data-lang="en">English</button></div>
+    <select id="scope" title="District"></select>
+    <button class="tab active" data-tab="admin" data-i18n="tabAdmin"></button>
+    <button class="tab" data-tab="staff" data-i18n="tabStaff"></button>
+    <button id="skip" class="ghost" data-i18n-title="skipTitle">+24h</button>
+    <button id="logout" class="ghost" hidden data-i18n="logout"></button>
+    <button id="reset" class="ghost" data-i18n="reset"></button>
+  </div>
+</header>
+<div class="banner" data-i18n="banner"></div>
+
+<div class="banner seed" id="seedBar" hidden></div>
+<div id="login" class="overlay" hidden><div class="box">
+  <div class="lang"><button data-lang="hi">हिंदी</button><button data-lang="en">English</button></div>
+  <h2 data-i18n="loginTitle"></h2><p class="muted" data-i18n="loginSub"></p>
+  <input id="lEmail" type="email" data-i18n-ph="email"><input id="lPass" type="password" data-i18n-ph="pass">
+  <button id="loginBtn" data-i18n="loginBtn"></button><p id="loginMsg" class="err"></p></div></div>
+
+<main id="admin">
+  <section class="kpis" id="kpis"></section>
+  <div class="grid2">
+    <section class="card"><h2 data-i18n="mapTitle"></h2><div id="map"></div>
+      <div class="legend"><i class="d g"></i><span data-i18n="legSafe"></span> <i class="d y"></i><span data-i18n="legReview"></span> <i class="d r"></i><span data-i18n="legHigh"></span></div></section>
+    <section class="card"><h2><span data-i18n="radarTitle"></span> <small id="alertCount"></small></h2>
+      <div id="alerts" class="scroll"></div></section>
+  </div>
+  <section class="card"><h2><span data-i18n="exchTitle"></span> <small data-i18n="exchSub"></small></h2>
+    <div id="recs"></div></section>
+  <section class="card" id="distCard"><h2 data-i18n="distTitle"></h2><div id="dist" class="scroll"></div></section>
+  <div class="grid2">
+    <section class="card"><h2 data-i18n="simTitle"></h2>
+      <div class="row">
+        <label><span data-i18n="simDelay"></span> <select id="simDelay"><option>1</option><option selected>3</option><option>5</option><option>7</option></select> <span data-i18n="days"></span></label>
+        <label><span data-i18n="simSurge"></span> <select id="simSurge"><option value="0" data-i18n="surge0"></option><option value="20" data-i18n="surge20"></option><option value="50" data-i18n="surge50"></option></select></label>
+        <label><span data-i18n="simMed"></span> <select id="simMed"></select></label>
+        <button id="simGo" data-i18n="simGo"></button>
+      </div><div id="simOut" class="out"></div></section>
+    <section class="card"><h2><span data-i18n="copTitle"></span> <small data-i18n="copSub"></small></h2>
+      <div class="row"><input id="q" data-i18n-ph="qPh"><button id="ask" data-i18n="ask"></button></div>
+      <div class="chips">
+        <button class="chip" data-i18n="chip1"></button><button class="chip" data-i18n="chip2"></button>
+        <button class="chip" data-i18n="chip3"></button><button class="chip" data-i18n="chip4"></button><button class="chip" data-i18n="chip5"></button>
+      </div><div id="ans" class="out"></div></section>
+  </div>
+  <section class="card"><h2><span data-i18n="logTitle"></span> <small data-i18n="logSub"></small></h2><div id="log" class="scroll small"></div></section>
+</main>
+
+<main id="staff" hidden>
+  <section class="card">
+    <h2 data-i18n="tabStaff"></h2>
+    <div class="row">
+      <label><span data-i18n="lblDist"></span> <select id="sDist"></select></label>
+      <label><span data-i18n="lblFac"></span> <select id="sFac"></select></label>
+    </div>
+    <div id="sInfo" class="out"></div>
+  </section>
+  <div class="grid2">
+    <section class="card"><h2 data-i18n="billTitle"></h2>
+      <p class="muted" data-i18n="billNote"></p>
+      <div class="row"><select id="dMed"></select><input id="dQty" type="number" min="1" value="10"><button id="dGo" data-i18n="dGo"></button></div>
+      <div class="row"><select id="rMed"></select><input id="rQty" type="number" min="1" value="100"><button id="rGo" class="ghost" data-i18n="rGo"></button></div>
+      <div id="sStock"></div></section>
+    <section class="card"><h2 data-i18n="bedsDocsTitle"></h2>
+      <div id="sBeds"></div><hr><div id="sDocs"></div></section>
+  </div>
+</main>
+<button id="chatFab" data-i18n="chatOpen"></button>
+<div id="chatBox" hidden>
+  <div class="chat-h"><b data-i18n="chatTitle"></b><span><button id="chatClear" class="ghost sm" data-i18n="chatClear"></button> <button id="chatClose" class="ghost sm">✕</button></span></div>
+  <div id="chatMsgs"></div>
+  <small class="muted chat-note" data-i18n="chatNote"></small>
+  <div class="row chat-in"><input id="chatIn" data-i18n-ph="chatPh"><button id="chatSend" data-i18n="chatSend"></button></div>
+</div>
+<footer data-i18n="footer"></footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
